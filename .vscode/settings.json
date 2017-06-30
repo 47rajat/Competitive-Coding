@@ -1,5 +1,25 @@
 {
     "files.associations": {
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "iostream": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "valarray": "cpp",
+        "ostream": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp",
+        "limits": "cpp",
+        "*.tcc": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "future": "cpp",
+        "istream": "cpp",
+        "mutex": "cpp",
+        "sstream": "cpp",
+        "streambuf": "cpp",
+        "thread": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp"
     }
 }
