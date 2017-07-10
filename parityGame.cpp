@@ -13,7 +13,26 @@ typedef vector<int> vi;
 typedef vector<vector<int>> vvi;
 typedef vector<ii> vii;
 typedef long long ll;
-typedef vector<pair<ll,ll>> vll;
+
+const int N = 1e3 + 10;
+int a[N];
+int n;
+
 
 int main(){
+
+    cin>>n;
+    int total = 0;
+    int odd = -1;
+    rep(i,n){
+        cin>>a[i];
+        total += a[i];
+        if(a[i] % 2 == 1 && odd < 0) odd = a[i]; 
+    }
+
+    if(total % 2 == 0) cout << 0 << endl;
+    else{
+        if( n> 1) cout << 1 << endl;
+        else cout << -1 << endl;
+    }
 }

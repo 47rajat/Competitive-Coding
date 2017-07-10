@@ -15,5 +15,16 @@ typedef vector<ii> vii;
 typedef long long ll;
 typedef vector<pair<ll,ll>> vll;
 
+int test;
+const int M1 = 1e9 + 7;
+const int M2 = 1e9 + 9;
+ll n;
+
 int main(){
+    cin>>test;
+    while(test--){
+        cin>> n;
+
+        
+    }
 }

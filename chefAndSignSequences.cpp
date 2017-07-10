@@ -15,5 +15,31 @@ typedef vector<ii> vii;
 typedef long long ll;
 typedef vector<pair<ll,ll>> vll;
 
+int test;
+string seq;
+
 int main(){
+    cin>>test;
+    while(test--){
+        cin>>seq;
+
+        int p = 0;
+        int q = 0;
+        int large = 0;
+        rep(i,seq.size()){
+           if(seq[i] == '<'){
+               p++;
+               q = 0;
+           }
+           if(seq[i] == '>'){
+               q++;
+               p = 0;
+           }
+
+           large = max(p,large);
+           large = max(q, large);
+        }
+
+        cout << large + 1<< endl;
+    }
 }

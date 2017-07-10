@@ -20,6 +20,7 @@
         "streambuf": "cpp",
         "thread": "cpp",
         "tuple": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "system_error": "cpp"
     }
 }
