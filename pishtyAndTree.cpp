@@ -20,6 +20,8 @@ const int N = 1e5 + 10;
 int test, n, m;
 vii graph[N];
 bool visited[N];
+int xr[N];
+int maxEdge[N];
 int ans;
 bool found;
 
@@ -41,10 +43,34 @@ void dfs(int u, int dest, int k){
     
 }
 
+void dfs0(int u, int curr, int e){
+    visited[u] = true;
+    xr[u] = curr;
+    maxEdge[u] = e;
+
+    arep(p, graph[u]){
+        if(!visited[p.first]){
+            curr ^= p.second;
+            dfs0(p.first, curr, max(e,p.second));
+
+            curr ^= p.second; 
+        }
+    }
+}
+
+void preprocess(){
+    memset(xr, 0, sizeof(xr));
+    memset(maxEdge, 0 , sizeof(xr));
+    memset(visited, false, sizeof(visited));
+    
+    dfs0(1, 0, 0);
+}
+
 
 int main(){
 
     cin>>test;
+
 
     while(test--){
         cin>>n;
@@ -58,17 +84,26 @@ int main(){
             graph[v].pb(mp(u,c));
         }
 
+        preprocess();
+
         cin>>m;
 
         rep(i,m){
             int u,v,k;
             cin>>u>>v>>k;
-            memset(visited, false, sizeof(visited));
-            ans = 0;
-            found = false;
-            dfs(u,v,k);
-            cout << ans << endl;
 
+            if(maxEdge[u] <= k && maxEdge[v] <= k){
+                // cout << xr[u] << " " << xr[v] << endl;
+                // cout << maxEdge[u] << " " << maxEdge[v] << endl;
+                cout << int(xr[u]^xr[v]) << endl;
+            }else{
+                memset(visited, false, sizeof(visited));
+                ans = 0;
+                found = false;
+                dfs(u,v,k);
+                cout << ans << endl;
+
+            }
         }
     }
 

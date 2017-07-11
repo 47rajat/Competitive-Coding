@@ -21,6 +21,8 @@
         "thread": "cpp",
         "tuple": "cpp",
         "utility": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     }
 }
