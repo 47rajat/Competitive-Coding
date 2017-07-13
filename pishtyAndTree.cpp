@@ -19,48 +19,26 @@ const int N = 1e5 + 10;
 
 int test, n, m;
 vii graph[N];
+int weight[N];
+int idx[N];
 bool visited[N];
 int xr[N];
-int maxEdge[N];
-int ans;
-bool found;
-
-void dfs(int u, int dest, int k){
-    visited[u] = true;
-    if(u == dest){
-        found = true;
-        return;
-    }
-
-    arep(p,graph[u]){
-        if(!visited[p.first]){
-            if(p.second <= k) ans ^= p.second;
-            dfs(p.first, dest, k);
-            if(found) return;
-            if(p.second <= k) ans ^= p.second;
-        }
-    }
-    
-}
 
 void dfs0(int u, int curr, int e){
     visited[u] = true;
     xr[u] = curr;
-    maxEdge[u] = e;
 
     arep(p, graph[u]){
         if(!visited[p.first]){
-            curr ^= p.second;
-            dfs0(p.first, curr, max(e,p.second));
-
-            curr ^= p.second; 
+            curr ^= weight[p.second];
+            dfs0(p.first, curr, max(e,weight[p.second]));
+            curr ^= weight[p.second]; 
         }
     }
 }
 
 void preprocess(){
     memset(xr, 0, sizeof(xr));
-    memset(maxEdge, 0 , sizeof(xr));
     memset(visited, false, sizeof(visited));
     
     dfs0(1, 0, 0);
@@ -76,34 +54,56 @@ int main(){
         cin>>n;
 
         memset(graph, {}, sizeof(graph));
-        
+        memset(weight, 0, sizeof(weight));
         rep(i,n-1){
-            int u,v,c;
-            cin>>u>>v>>c;
-            graph[u].pb(mp(v,c));
-            graph[v].pb(mp(u,c));
+            int u,v;
+            cin>>u>>v>>weight[i];
+            graph[u].pb(mp(v,i));
+            graph[v].pb(mp(u,i));
+        }
+        vii weightIndex(n-1);
+        rep(i,n-1){
+            weightIndex[i] = mp(weight[i], i);
+        }
+
+        sort(weightIndex.begin(), weightIndex.end());
+        reverse(weightIndex.begin(), weightIndex.end());
+
+        memset(idx, -1, sizeof(idx));
+
+        rep(i,n-1){
+            idx[i] = weightIndex[i].second;
         }
 
         preprocess();
 
         cin>>m;
 
+        vector<pair<int,ii>> query;
         rep(i,m){
             int u,v,k;
             cin>>u>>v>>k;
+            query.pb(mp(k,mp(u,v)));
+        }
 
-            if(maxEdge[u] <= k && maxEdge[v] <= k){
-                // cout << xr[u] << " " << xr[v] << endl;
-                // cout << maxEdge[u] << " " << maxEdge[v] << endl;
-                cout << int(xr[u]^xr[v]) << endl;
-            }else{
-                memset(visited, false, sizeof(visited));
-                ans = 0;
-                found = false;
-                dfs(u,v,k);
-                cout << ans << endl;
+        sort(query.begin(), query.end());
+        reverse(query.begin(), query.end());
 
+        int curr = 0;
+        arep(p,query){
+            int k = p.first;
+            int u = p.second.first;
+            int v = p.second.second;
+
+            bool change = false;
+            while(curr < n-1 && k < weight[idx[curr]]){
+                weight[idx[curr]] = 0;
+                curr++;
+                change = true;
             }
+            if(change) preprocess();
+            // cout << u << " " << v << endl;
+            cout << int(xr[u] ^ xr[v]) << endl;
         }
     }
 
